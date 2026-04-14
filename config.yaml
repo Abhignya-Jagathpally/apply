@@ -21,10 +21,9 @@ linkedin_canonical_searches:
 # Only keep confirmed-valid ATS tenants. Unknown slugs 404 and waste a request.
 greenhouse_slugs:
   [scaleai, pinterest, samsungsemiconductor, stripe, airbnb, databricks,
-   benchling, anthropic, openai, plaid, instacart, robinhood, affirm, figma,
-   duolingo, notion, discord, dropbox]
+   anthropic, instacart, robinhood, affirm, figma, duolingo, discord, dropbox]
 
-lever_slugs: [netflix, spotify, brex, ramp, mercury, kraken]
+lever_slugs: [spotify, kraken]
 
 # Dallas-area cities (substring match, case-insensitive)
 dallas_area:
