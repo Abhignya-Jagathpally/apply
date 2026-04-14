@@ -1,0 +1,64 @@
+# Pipeline configuration
+
+# LinkedIn saved searches from the owner
+linkedin_saved_searches:
+  - https://lnkd.in/dyQjDeZq
+  - https://lnkd.in/dajwvFXq
+  - https://lnkd.in/djTA9mSf
+
+# Canonical fallback LinkedIn searches (URL-param form) so we always have coverage
+linkedin_canonical_searches:
+  # Data / AI internships, Dallas-Fort Worth, past 24h, entry level
+  - "https://www.linkedin.com/jobs/search/?keywords=data%20intern&location=Dallas-Fort%20Worth%20Metroplex&f_TPR=r86400&f_E=1"
+  - "https://www.linkedin.com/jobs/search/?keywords=machine%20learning%20intern&location=Dallas-Fort%20Worth%20Metroplex&f_TPR=r86400&f_E=1"
+  - "https://www.linkedin.com/jobs/search/?keywords=ai%20intern&location=Dallas-Fort%20Worth%20Metroplex&f_TPR=r86400&f_E=1"
+  # Remote USA
+  - "https://www.linkedin.com/jobs/search/?keywords=data%20scientist%20intern&location=United%20States&f_WT=2&f_TPR=r86400&f_E=1"
+  - "https://www.linkedin.com/jobs/search/?keywords=machine%20learning%20intern&location=United%20States&f_WT=2&f_TPR=r86400&f_E=1"
+  - "https://www.linkedin.com/jobs/search/?keywords=ai%20research%20intern&location=United%20States&f_WT=2&f_TPR=r86400&f_E=1"
+
+# ATS boards to poll (company slugs)
+greenhouse_slugs:
+  [samsungsemiconductor, scaleai, pinterest, doordash, rivian, tesla, atlassian,
+   capitalone, experian, nvidia, meriton, rebelathletic, abcfitness, conifer]
+
+lever_slugs: [bhg, catalystbrands]
+
+# Dallas-area cities (substring match, case-insensitive)
+dallas_area:
+  - dallas
+  - fort worth
+  - plano
+  - frisco
+  - irving
+  - arlington
+  - richardson
+  - addison
+  - mckinney
+  - allen
+  - carrollton
+  - garland
+  - grapevine
+  - lewisville
+  - las colinas
+  - dfw
+
+# Title must include at least one from each list
+title_positive_domain:
+  [data, ml, ai, machine learning, analytics, analyst, scientist, research, deep learning, nlp, computer vision]
+title_positive_role:
+  [intern, internship, co-op, coop]
+
+# Title must NOT match any of these
+title_negative:
+  [senior, staff, principal, lead, sr., manager, director, vp,
+   sales, marketing, recruiter, hr,
+   accounting, tax, audit, legal]
+
+apply:
+  dry_run: true          # set false (or env APPLY_DRY_RUN=0) to actually submit
+  max_per_run: 25
+  skip_if_asks_for:      # required free-text fields that should cause a skip
+    - github url
+    - portfolio url
+    - personal website
