@@ -30,13 +30,23 @@ def matches_title(title: str, cfg: dict) -> bool:
 
 
 def matches_location(location: str, remote: bool, cfg: dict) -> bool:
-    if remote:
-        # Remote-USA only (exclude international-remote)
-        loc = location.lower()
-        if any(x in loc for x in ["united states", "usa", "remote"]) and \
-           not any(x in loc for x in ["canada", "india", "uk", "emea", "europe"]):
+    loc = location.lower()
+    # Hard reject anything clearly outside the US
+    if any(x in loc for x in ["canada", "india", "uk", "emea", "europe",
+                              "germany", "france", "london", "ireland",
+                              "japan", "china", "mexico", "brazil"]):
+        return False
+    # Dallas-area substring match
+    if _any(location, cfg["dallas_area"]):
+        return True
+    # Remote-USA (flag set by scraper OR literal "remote" in string)
+    if remote or "remote" in loc:
+        if any(x in loc for x in ["united states", "usa", "remote"]):
             return True
-    return _any(location, cfg["dallas_area"])
+    # Texas (catches "Texas, United States" postings from Dallas searches)
+    if "texas" in loc or ", tx" in loc:
+        return True
+    return False
 
 
 def resume_variant(title: str) -> str:
