@@ -18,11 +18,13 @@ linkedin_canonical_searches:
   - "https://www.linkedin.com/jobs/search/?keywords=ai%20research%20intern&location=United%20States&f_WT=2&f_TPR=r86400&f_E=1"
 
 # ATS boards to poll (company slugs)
+# Only keep confirmed-valid ATS tenants. Unknown slugs 404 and waste a request.
 greenhouse_slugs:
-  [samsungsemiconductor, scaleai, pinterest, doordash, rivian, tesla, atlassian,
-   capitalone, experian, nvidia, meriton, rebelathletic, abcfitness, conifer]
+  [scaleai, pinterest, samsungsemiconductor, stripe, airbnb, databricks,
+   benchling, anthropic, openai, plaid, instacart, robinhood, affirm, figma,
+   duolingo, notion, discord, dropbox]
 
-lever_slugs: [bhg, catalystbrands]
+lever_slugs: [netflix, spotify, brex, ramp, mercury, kraken]
 
 # Dallas-area cities (substring match, case-insensitive)
 dallas_area:
