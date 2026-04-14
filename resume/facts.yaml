@@ -1,0 +1,46 @@
+# Authoritative facts for the LLM answerer. Keep this current — any question
+# not answered by the resume will be answered from here.
+name: Abhignya Jagathpally
+email: abhignya.j@gmail.com
+phone: ""                      # fill in if you want it sent
+location_current: Dallas, TX
+linkedin: https://www.linkedin.com/in/abhignya-jagathpally
+# github/portfolio intentionally omitted — do not add them
+
+education:
+  degree: PhD (in progress), Computer Science / Data Science
+  school: University of North Texas
+  expected: "2027"
+
+work_authorization:
+  authorized_us: "Yes"
+  requires_sponsorship: "Yes"        # F-1 / STEM OPT — adjust to your actual status
+  sponsorship_now_or_future: "Yes"
+
+years_experience:
+  total: 3
+  python: 3
+  sql: 3
+  pyspark: 3
+  spark: 3
+  hadoop: 2
+  aws: 2
+  gcp: 1
+  azure: 2
+  machine_learning: 2
+  deep_learning: 2
+  pytorch: 2
+  tensorflow: 1
+  nlp: 1
+  computer_vision: 1
+
+logistics:
+  willing_to_relocate: "Yes"
+  willing_remote: "Yes"
+  start_date: "Summer 2026"
+  desired_salary_usd_hourly: 45
+  gpa: "3.9"
+
+employers_prior:
+  - Elevance Health (via Carelon) — Big Data Engineer
+  - Nike (via Lyve Tech) — Big Data Engineer
