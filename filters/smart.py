@@ -13,13 +13,20 @@ def _any(haystack: str, needles: list[str]) -> bool:
 
 def matches_title(title: str, cfg: dict) -> bool:
     t = title.lower()
-    if not _any(t, cfg["title_positive_domain"]):
-        return False
-    if not _any(t, cfg["title_positive_role"]):
-        return False
     if _any(t, cfg["title_negative"]):
         return False
-    return True
+    # Must be an intern/early-career role
+    if not _any(t, cfg["title_positive_role"]):
+        return False
+    # Accept if it's explicitly a data/AI domain title...
+    if _any(t, cfg["title_positive_domain"]):
+        return True
+    # ...OR if it's a generic tech intern title the owner would also consider.
+    # This is the "smart" relaxation: once location+role is matched, a generic
+    # SWE/Research intern at a tech-heavy employer is in scope.
+    generic_ok = ["software", "engineer", "engineering", "research",
+                  "quant", "applied", "platform", "backend"]
+    return _any(t, generic_ok)
 
 
 def matches_location(location: str, remote: bool, cfg: dict) -> bool:
