@@ -11,7 +11,7 @@ jobs:
     timeout-minutes: 45
     env:
       LINKEDIN_STATE_JSON: ${{ secrets.LINKEDIN_STATE_JSON }}
-      APPLY_DRY_RUN: "1"
+      APPLY_DRY_RUN: "0"
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
