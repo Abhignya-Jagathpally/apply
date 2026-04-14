@@ -87,7 +87,8 @@ def run(jobs: list[dict], cfg: dict) -> list[dict]:
         ctx = browser.new_context(storage_state=str(STATE) if STATE.exists() else None)
         page = ctx.new_page()
         for j in jobs[:max_n]:
-            if not j.get("easy_apply"):
+            # Only LinkedIn postings can be Easy-Applied; ATS jobs always manual.
+            if not j.get("source","").startswith("linkedin"):
                 results.append({**j, "result": "non_easy_apply_needs_manual"}); continue
             try:
                 status = apply_one(page, j, skip_terms)
