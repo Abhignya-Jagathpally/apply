@@ -49,7 +49,17 @@ def matches_location(location: str, remote: bool, cfg: dict) -> bool:
     return False
 
 
-def resume_variant(title: str) -> str:
+def resume_variant(title: str, description: str = "") -> str:
+    """Pick the resume variant with the highest lexical overlap against the JD.
+    Falls back to title-only heuristics if the JD description is empty."""
+    jd = f"{title}\n{description}".strip()
+    if len(jd) > 200:
+        try:
+            from filters.match_score import best_variant
+            v, _ = best_variant(jd)
+            return v
+        except Exception:
+            pass
     t = title.lower()
     if re.search(r"\b(research|scientist|phd|ph\.d)\b", t): return "DS_ML_Research"
     if re.search(r"\b(ml|machine learning|deep learning|nlp|computer vision|ai)\b", t):
@@ -79,7 +89,7 @@ def filter_jobs(jobs: list[dict], cfg: dict) -> list[dict]:
         if not matches_title(j.get("title",""), cfg): continue
         if not matches_location(j.get("location",""), j.get("remote", False), cfg): continue
         j["job_id"] = jid
-        j["resume_variant"] = resume_variant(j["title"])
+        j["resume_variant"] = resume_variant(j["title"], j.get("description",""))
         seen.add(jid)
         out.append(j)
     return out
