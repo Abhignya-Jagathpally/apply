@@ -23,6 +23,9 @@ def main():
     for slug in cfg["lever_slugs"]:      jobs += lever(slug)
 
     print(f"[run] raw jobs: {len(jobs)}")
+    # show a sample so we can sanity-check what the scrapers brought in
+    for j in jobs[:20]:
+        print(f"  [sample] {j.get('source','?'):22} | {j.get('location','')[:40]:40} | {j.get('title','')[:80]}")
     (DATA / "jobs.jsonl").write_text("\n".join(json.dumps(j) for j in jobs))
 
     matched = filter_jobs(jobs, cfg)
