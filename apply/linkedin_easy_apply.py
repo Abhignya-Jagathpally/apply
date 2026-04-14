@@ -58,13 +58,39 @@ def apply_one(page, job: dict, skip_terms: list[str]) -> str:
     except Exception: pass
 
     # Walk the wizard: Next -> Next -> Review -> Submit
-    for _ in range(8):
+    from apply.llm_answers import answer as llm_answer
+    for _ in range(10):
         if _dry():
             page.keyboard.press("Escape"); return "dry_run_walkthrough_ok"
-        # Any unanswered required free-text? bail.
-        unanswered = page.locator("input[required]:not([value]), textarea[required]:empty")
-        if unanswered.count() > 0:
-            page.keyboard.press("Escape"); return "skipped_unanswered_required"
+        # Try to answer each required free-text / numeric field via LLM
+        for sel in ["input[required]:not([value])", "textarea[required]:empty"]:
+            fields = page.locator(sel)
+            for k in range(fields.count()):
+                f = fields.nth(k)
+                try:
+                    label = f.evaluate("el => (el.labels && el.labels[0]?.innerText) || el.getAttribute('aria-label') || el.name || ''")
+                except Exception:
+                    label = ""
+                if not label: continue
+                ans = llm_answer(label)
+                if not ans:
+                    page.keyboard.press("Escape"); return "skipped_no_llm_answer"
+                try: f.fill(ans)
+                except Exception: pass
+        # Select-based questions
+        selects = page.locator("select[required]")
+        for k in range(selects.count()):
+            s = selects.nth(k)
+            try:
+                label = s.evaluate("el => (el.labels && el.labels[0]?.innerText) || el.getAttribute('aria-label') || ''")
+                opts = s.evaluate("el => Array.from(el.options).map(o => o.innerText).filter(Boolean)")
+            except Exception:
+                label, opts = "", []
+            if not label or not opts: continue
+            ans = llm_answer(label, options=opts)
+            if ans in opts:
+                try: s.select_option(label=ans)
+                except Exception: pass
         # Click the most advanced available button
         for label in ["Submit application", "Review", "Next"]:
             btn = page.locator(f"button:has-text('{label}')").first
