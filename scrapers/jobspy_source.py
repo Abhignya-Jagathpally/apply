@@ -11,7 +11,7 @@ from typing import Iterable
 import pandas as pd
 from jobspy import scrape_jobs
 
-SITES = ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google"]
+SITES = ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google", "dice", "handshake", "zintellect", "wayup", "extern", "y_combinator", "trueup", "H1B_visa_jobs", "simplyhired"]
 
 
 def _one(location: str, search_term: str, is_remote: bool, hours_old: int) -> pd.DataFrame:
