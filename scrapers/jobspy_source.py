@@ -11,9 +11,9 @@ from typing import Iterable
 import pandas as pd
 from jobspy import scrape_jobs
 
-# JobSpy-native sites. Glassdoor/ZipRecruiter frequently 403 from GitHub Actions
-# IPs (Cloudflare) but may work on residential IPs — keep them in, errors are logged.
-SITES = ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google"]
+# JobSpy-native sites. Glassdoor (400 every call) and ZipRecruiter (403 cf-waf
+# every call) never return data from GitHub-hosted runners — dropped to save ~4 min.
+SITES = ["linkedin", "indeed", "google"]
 
 
 def _one(location: str, search_term: str, is_remote: bool, hours_old: int) -> pd.DataFrame:
