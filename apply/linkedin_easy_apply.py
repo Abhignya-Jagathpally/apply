@@ -91,15 +91,19 @@ def apply_one(page, job: dict, skip_terms: list[str]) -> str:
             if ans in opts:
                 try: s.select_option(label=ans)
                 except Exception: pass
-        # Click the most advanced available button
-        for label in ["Submit application", "Review", "Next"]:
-            btn = page.locator(f"button:has-text('{label}')").first
+        # Click the most advanced available button. aria-label covers icon-only buttons.
+        progressed = False
+        for label in ["Submit application", "Submit", "Review", "Continue to next step", "Next", "Continue"]:
+            btn = page.locator(
+                f"button[aria-label*='{label}' i], button:has-text('{label}')"
+            ).first
             if btn.count() and btn.is_enabled():
-                btn.click(); page.wait_for_timeout(1200)
-                if label == "Submit application":
+                btn.click(); page.wait_for_timeout(1500)
+                if label.startswith("Submit"):
                     return "submitted"
+                progressed = True
                 break
-        else:
+        if not progressed:
             return "stuck_in_wizard"
     return "wizard_too_long"
 
@@ -113,9 +117,6 @@ def run(jobs: list[dict], cfg: dict) -> list[dict]:
         ctx = browser.new_context(storage_state=str(STATE) if STATE.exists() else None)
         page = ctx.new_page()
         for j in jobs[:max_n]:
-            # Only LinkedIn postings can be Easy-Applied; ATS jobs always manual.
-            if not j.get("source","").startswith("linkedin"):
-                results.append({**j, "result": "non_easy_apply_needs_manual"}); continue
             try:
                 status = apply_one(page, j, skip_terms)
             except Exception as e:
