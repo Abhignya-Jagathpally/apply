@@ -26,8 +26,9 @@ greenhouse_slugs:
 lever_slugs: [spotify, kraken]
 
 # Add real tenant slugs as you discover them. Unknown slugs 404 and are logged.
-ashby_slugs:         [openai, ramp, notion, linear, replicate, posthog, deel]
-workable_slugs:      [huggingface, replit]
+ashby_slugs:         [openai, ramp, notion, linear, posthog, deel]
+workable_slugs:      []  # add verified tenant slugs only — drive-by guesses 404
+
 smartrecruiters_slugs: [bosch, visa, sap, tesco]
 breezy_slugs:        []
 
