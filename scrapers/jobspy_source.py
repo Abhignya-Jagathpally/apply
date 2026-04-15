@@ -11,7 +11,9 @@ from typing import Iterable
 import pandas as pd
 from jobspy import scrape_jobs
 
-SITES = ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google", "dice", "handshake", "zintellect", "wayup", "extern", "y_combinator", "trueup", "H1B_visa_jobs", "simplyhired"]
+# JobSpy-native sites. Glassdoor/ZipRecruiter frequently 403 from GitHub Actions
+# IPs (Cloudflare) but may work on residential IPs — keep them in, errors are logged.
+SITES = ["linkedin", "indeed", "glassdoor", "zip_recruiter", "google"]
 
 
 def _one(location: str, search_term: str, is_remote: bool, hours_old: int) -> pd.DataFrame:
@@ -36,6 +38,7 @@ def fetch(cfg: dict) -> list[dict]:
     terms = cfg.get("search_terms", [
         "data science intern", "machine learning intern", "ai intern",
         "data engineer intern", "research intern", "analytics intern",
+        "applied scientist intern", "phd intern data", "phd intern ai",
     ])
     frames: list[pd.DataFrame] = []
     for t in terms:
