@@ -50,14 +50,10 @@ def main():
 
     results = li_apply(li_jobs, cfg) + ats_apply(ats_jobs, cfg)
 
-    def _c(key_pred):
-        return sum(1 for r in results if key_pred(r.get("result","")))
-
-    submitted = _c(lambda r: r == "submitted")
-    dry       = _c(lambda r: r.startswith("dry_run"))
-    skipped   = _c(lambda r: r.startswith("skipped_"))
-    errored   = _c(lambda r: r.startswith(("error:", "nav_error", "no_submit", "no_answer", "no_easy_apply")))
-    print(f"[run] submitted={submitted} dry={dry} skipped={skipped} errored={errored} total={len(results)}")
+    from collections import Counter
+    tally = Counter(r.get("result","?") for r in results)
+    print(f"[run] results by code: {dict(tally)}")
+    print(f"[run] submitted={tally.get('submitted',0)} total={len(results)}")
 
 if __name__ == "__main__":
     main()
