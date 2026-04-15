@@ -119,8 +119,9 @@ def zintellect() -> list[dict]:
 
 
 def fetch_all() -> list[dict]:
+    # dice skipped: marketplace-api.dice.com is DNS-unreachable from GH Actions
     jobs = []
-    for fn in (dice, simplyhired, ycombinator, zintellect):
+    for fn in (simplyhired, ycombinator, zintellect):
         try: jobs += fn()
         except Exception as e: print(f"[custom_boards:{fn.__name__}] {e}")
     return jobs
