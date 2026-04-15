@@ -25,6 +25,12 @@ greenhouse_slugs:
 
 lever_slugs: [spotify, kraken]
 
+# Add real tenant slugs as you discover them. Unknown slugs 404 and are logged.
+ashby_slugs:         [openai, ramp, notion, linear, replicate, posthog, deel]
+workable_slugs:      [huggingface, replit]
+smartrecruiters_slugs: [bosch, visa, sap, tesco]
+breezy_slugs:        []
+
 # Dallas-area cities (substring match, case-insensitive)
 dallas_area:
   - dallas
@@ -48,7 +54,7 @@ dallas_area:
 title_positive_domain:
   [data, ml, ai, machine learning, analytics, analyst, scientist, research, deep learning, nlp, computer vision]
 title_positive_role:
-  [intern, internship, co-op, coop]
+  [intern, internship, co-op, coop, " i ", " i,"]   # internships only
 
 # Title must NOT match any of these
 title_negative:
@@ -58,7 +64,7 @@ title_negative:
 
 apply:
   dry_run: true          # set false (or env APPLY_DRY_RUN=0) to actually submit
-  max_per_run: 25
+  max_per_run: 100
   skip_if_asks_for:      # required free-text fields that should cause a skip
     - github url
     - portfolio url
